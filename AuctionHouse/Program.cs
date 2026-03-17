@@ -13,7 +13,21 @@ List<AuctionItem> auction = new List<AuctionItem>
     new AuctionItem{ Name = "회복 물약", Category = "소비", CurrentBid = 5000, BidCount = 3  }
 };
 
+Console.WriteLine("=== 입찰가 기준 정렬 (BidComparer) ===");
+auction.Sort(new BidComparer());
+foreach (var item in auction)
+{
+    Console.WriteLine(item);
+}
+Console.WriteLine();
 
+Console.WriteLine("=== 입찰 횟수 기준 정렬 (Create 람다) ===");
+Comparer<AuctionItem> currentbid = Comparer<AuctionItem>.Create((x, y) => y.BidCount.CompareTo(x.BidCount));
+auction.Sort(currentbid);
+foreach (var item in auction)
+{
+    Console.WriteLine(item);
+}
 class AuctionItem
 {
     public string Name { get; set; }
@@ -50,4 +64,7 @@ class BidComparer : Comparer<AuctionItem>
         }
         return x.Name.CompareTo(y.Name);
     }
+
+    
 }
+
