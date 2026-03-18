@@ -14,6 +14,46 @@ List<Item> items = new()
     new Item("체력 물약", "소비","일반"),
 };
 
+Console.WriteLine("=== 타입별 그룹핑 ===");
+Dictionary<Item, List<Item>> itemlist = new(new ItemTypeComparer());
+foreach (Item item in items)
+{
+    if (!itemlist.ContainsKey(item))
+    {
+        itemlist.Add(item, new List<Item>());
+    }
+    itemlist[item].Add(item);
+}
+
+foreach (var itemKvp in itemlist)
+{
+    Console.WriteLine($"[{itemKvp.Key.Type}]");
+    foreach (var item in itemKvp.Value)
+    {
+        Console.WriteLine($" - {item.Name} ({item.Grade})");
+    }
+}
+
+Console.WriteLine("=== 타입별 그룹핑 ===");
+Dictionary<Item, List<Item>> itemlist1 = new(new ItemGradeComparer());
+foreach(Item item in items)
+{
+    if (!itemlist1.ContainsKey(item))
+    {
+        itemlist1.Add(item, new List<Item>());
+    }
+    itemlist1[item].Add(item);
+}
+foreach (var itemKvp in itemlist1)
+{
+    Console.WriteLine($"[{itemKvp.Key.Grade}]");
+    foreach (var item in itemKvp.Value)
+    {
+        Console.WriteLine($" - {item.Name} ({item.Type})");
+    }
+}
+
+
 
 class Item
 {
